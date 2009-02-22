@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for module &quot;web_txwowguildM3&quot; - header, description</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="mlang_tabs_tab">Raids</label>
+			<label index="mlang_labels_tabdescr">This is just an example</label>
+		</languageKey>
+		<languageKey index="de" type="array">
+			<label index="mlang_tabs_tab">Raids</label>
+			<label index="mlang_labels_tabdescr">Dies ist nur ein Beispiel Modul</label>
+		</languageKey>
+	</data>
+</T3locallang>
