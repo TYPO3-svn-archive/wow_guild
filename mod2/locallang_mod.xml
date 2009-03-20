@@ -6,12 +6,12 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-			<label index="mlang_tabs_tab">Members</label>
-			<label index="mlang_labels_tabdescr">This is just an example</label>
+			<label index="mlang_tabs_tab">Guild</label>
+			<label index="mlang_labels_tabdescr">Manage guild related settings.</label>
 		</languageKey>
 		<languageKey index="de" type="array">
-			<label index="mlang_tabs_tab">Mitglieder</label>
-			<label index="mlang_labels_tabdescr">Dies ist nur ein Beispiel Modul</label>
+			<label index="mlang_tabs_tab">Gilde</label>
+			<label index="mlang_labels_tabdescr">Gilde spezifische Einstellungen.</label>
 		</languageKey>
 	</data>
 </T3locallang>

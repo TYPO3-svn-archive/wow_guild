@@ -22,6 +22,22 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+require_once(t3lib_extMgm::extPath('wow_guild').'inc/class.tx_wowguild_guild.php');
+
+DEFINE(CLASSID_WA,1);
+DEFINE(CLASSID_PA,2);
+DEFINE(CLASSID_HU,3);
+DEFINE(CLASSID_RO,4);
+DEFINE(CLASSID_PR,5);
+DEFINE(CLASSID_DK,6);
+DEFINE(CLASSID_SH,7);
+DEFINE(CLASSID_MA,8);
+DEFINE(CLASSID_WL,9);
+DEFINE(CLASSID_DR,11);
+
+DEFINE(CLASS_NAMES,'Warrior|Paladin|Hunter|Rogue|Priest|Death Knight|Shaman|Mage|Warlock|-|Druid');
+DEFINE(CLASS_COLOR,'#C79C6E|#F58CBA|#ABD473|#FFF569|#FFFFFF|#C41F3B|#2459FF|#69CCF0|#9482C9||#FF7D0A');
+
 /**
  * Module 'wow_guild' Section 'Members' for the 'wow_guild' extension.
  *
@@ -33,6 +49,7 @@ class tx_wowguild_mod2 {
 	var $prefixId      = 'tx_wowguild_mod2';		// Same as class name
 	var $scriptRelPath = 'mod2/class.tx_wowguild_mod2.php';	// Path to this script relative to the extension dir.
 	var $extKey        = 'wow_guild';	// The extension key.
+  var $conf          = null;
 	
 	/**
 	 * The main method of the PlugIn
@@ -41,17 +58,25 @@ class tx_wowguild_mod2 {
 	 * @param	array		$conf: The PlugIn configuration
 	 * @return	The content that is displayed on the website
 	 */
-	function main()	{
-    $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('realm,title,name,avatar','tx_wowcharacter_characters C,fe_groups G','C.fe_group = G.uid');
-    $row = $GLOBALS["TYPO3_DB"]->sql_fetch_assoc($res);
-    $content .= '<table cellspacing="0" cellpadding="3" border="1">';
-    $content .= "<tr><th>".implode("</th><th>",array_keys($row))."</th></tr>\n";
-    $content .= "<tr><td>".implode("</td><td>",$row)."</td></tr>\n";
-    while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res) ){
-      $content .= "<tr><td>".implode("</td><td>",$row)."</td></tr>\n";
-    }  
-    $content .= '</table>';
-		return $content;
+	function main($content,$conf)	{
+    $this->conf = $conf;
+    $guild = new tx_wowguild_guild($this->conf['realm'],$this->conf['name']);
+    $content .= "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n";
+    foreach( $guild->members->character as $num => $char ){
+      $content .= sprintf(
+        "<tr class=\"class%02d\"><td><a href=\"http://armory.wow-europe.com/character-sheet.xml?%s\" target=\"armory.wow-europe.com\">%s</a></td><td>[%02d]%s</td><td>[%02d]%s</td><td>%s</td></tr>\n",
+        $char['classId'],
+        $char['url'],
+        $char['name'],
+        $char['raceId'],
+        $char['race'],
+        $char['classId'],
+        $char['class'],
+        $char['level']
+      );
+    }
+    $content .= "</table>\n";
+    return $content;
 	}
   
 }

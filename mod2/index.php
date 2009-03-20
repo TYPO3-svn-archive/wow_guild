@@ -77,8 +77,10 @@ class  tx_wowguild_module2 extends t3lib_SCbase {
 					$this->pageinfo = t3lib_BEfunc::readPageAccess($this->id,$this->perms_clause);
 					$access = is_array($this->pageinfo) ? 1 : 0;
 					if (($this->id && $access) || ($BE_USER->user['admin'] && !$this->id))	{
-						// Draw the header.
 						$this->doc = t3lib_div::makeInstance('mediumDoc');
+            // styles
+            $this->doc->styleSheetFile2 = $GLOBALS["temp_modPath"].'style.css';
+						// Draw the header.
 						$this->doc->backPath = $BACK_PATH;
 						$this->doc->form='<form action="" method="POST">';
 						// JavaScript
@@ -88,7 +90,7 @@ class  tx_wowguild_module2 extends t3lib_SCbase {
 						$this->content.=$this->doc->startPage($LANG->getLL('title'));
 						$this->content.=$this->doc->header($LANG->getLL('title'));
 						$this->content.=$this->doc->divider(5);
-						$this->moduleContent();
+						$this->moduleContent(unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['wow_guild']));
             $this->content.=$this->doc->divider(5);
 						if ($BE_USER->mayMakeShortcut()) $this->content.=$this->doc->spacer(20).$this->doc->section('',$this->doc->makeShortcutIcon('id',implode(',',array_keys($this->MOD_MENU)),$this->MCONF['name']));
 						$this->content.=$this->doc->spacer(10);
@@ -117,9 +119,9 @@ class  tx_wowguild_module2 extends t3lib_SCbase {
 				 *
 				 * @return	void
 				 */
-				function moduleContent(){
+				function moduleContent($conf){
           $tx_wowguild_mod2 = t3lib_div::makeInstance('tx_wowguild_mod2');
-					$this->content .= $tx_wowguild_mod2->main();
+					$this->content .= $tx_wowguild_mod2->main('',$conf);
 				}
         
 			}
@@ -129,9 +131,6 @@ class  tx_wowguild_module2 extends t3lib_SCbase {
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/wow_guild/mod2/index.php'])	{
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/wow_guild/mod2/index.php']);
 }
-
-
-
 
 // Make instance:
 $SOBE = t3lib_div::makeInstance('tx_wowguild_module2');

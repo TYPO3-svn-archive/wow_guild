@@ -6,14 +6,14 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-			<label index="mlang_tabs_tab">WOW Guild</label>
-			<label index="mlang_labels_tabdescr">Manage your Guild</label>
-			<label index="mlang_labels_tablabel">wow_guild_label</label>
+			<label index="mlang_tabs_tab"><![CDATA[World of Warcraft&trade;]]></label>
+			<label index="mlang_labels_tablabel">WOW related management</label>
+			<label index="mlang_labels_tabdescr">mlang_labels_tabdescr</label>
 		</languageKey>
 		<languageKey index="de" type="array">
-			<label index="mlang_tabs_tab">WOW Gilde</label>
-			<label index="mlang_labels_tabdescr">Verwalte deine Gilde</label>
-			<label index="mlang_labels_tablabel">wow_guild_label</label>
+			<label index="mlang_tabs_tab"><![CDATA[World of Warcraft&trade;]]></label>
+			<label index="mlang_labels_tablabel">WOW spezifische Einstellungen</label>
+			<label index="mlang_labels_tabdescr">mlang_labels_tabdescr</label>
 		</languageKey>
 	</data>
 </T3locallang>

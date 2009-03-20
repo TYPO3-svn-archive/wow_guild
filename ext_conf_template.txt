@@ -1,0 +1,5 @@
+# cat=basic/string; type=string; label=Realm:Enter your realm name here.
+realm = 
+
+# cat=basic/string; type=string; label=Name:Enter your guild name here.|Name:Gib hier deinen Gildennamen an.
+name = 

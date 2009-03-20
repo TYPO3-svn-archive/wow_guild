@@ -1,0 +1,16 @@
+
+table {background-color:#000;padding:3px;border:2px inset #aaa;}
+table tr td {padding:0 5px;}
+table tr td a {color:inherit;}
+table tr td a:hover {color:inherit;text-decoration:underline;}
+table tr.class01 td {color:#C79C6E;} /*Warrior*/
+table tr.class02 td {color:#F58CBA;} /*Paladin*/
+table tr.class03 td {color:#ABD473;} /*Hunter*/
+table tr.class04 td {color:#FFF569;} /*Rogue*/
+table tr.class05 td {color:#FFFFFF;} /*Priest*/
+table tr.class06 td {color:#C41F3B;} /*Death Knight*/
+table tr.class07 td {color:#2459FF;} /*Shaman*/
+table tr.class08 td {color:#69CCF0;} /*Mage*/
+table tr.class09 td {color:#9482C9;} /*Warlock*/
+table tr.class10 td {color:inherit;} /*none*/
+table tr.class11 td {color:#FF7D0A;} /*Druid*/
