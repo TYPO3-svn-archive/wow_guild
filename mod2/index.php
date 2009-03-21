@@ -88,11 +88,11 @@ class  tx_wowguild_module2 extends t3lib_SCbase {
 						$this->doc->postCode='<script language="javascript" type="text/javascript">script_ended = 1;if (top.fsMod) top.fsMod.recentIds["web"] = 0;</script>';
 						$headerSection = $this->doc->getHeader('pages',$this->pageinfo,$this->pageinfo['_thePath']).'<br />'.$LANG->sL('LLL:EXT:lang/locallang_core.xml:labels.path').': '.t3lib_div::fixed_lgd_pre($this->pageinfo['_thePath'],50);
 						$this->content.=$this->doc->startPage($LANG->getLL('title'));
-						$this->content.=$this->doc->header($LANG->getLL('title'));
-						$this->content.=$this->doc->divider(5);
+						//$this->content.=$this->doc->header($LANG->getLL('title'));
+						//$this->content.=$this->doc->divider(5);
 						$this->moduleContent(unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['wow_guild']));
-            $this->content.=$this->doc->divider(5);
-						if ($BE_USER->mayMakeShortcut()) $this->content.=$this->doc->spacer(20).$this->doc->section('',$this->doc->makeShortcutIcon('id',implode(',',array_keys($this->MOD_MENU)),$this->MCONF['name']));
+            //$this->content.=$this->doc->divider(5);
+						//if ($BE_USER->mayMakeShortcut()) $this->content.=$this->doc->spacer(20).$this->doc->section('',$this->doc->makeShortcutIcon('id',implode(',',array_keys($this->MOD_MENU)),$this->MCONF['name']));
 						$this->content.=$this->doc->spacer(10);
 					} else {// If no access or if ID == zero
 						$this->doc = t3lib_div::makeInstance('mediumDoc');

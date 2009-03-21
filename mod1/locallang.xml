@@ -6,10 +6,34 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-			<label index="title">World of Warcraft&trade;</label>
+      <label index="title"><![CDATA[World of Warcraft&trade;]]></label>
+      <label index="sortby.class">characters by class:</label>
+			<label index="sortby.race">characters by race:</label>
+      <label index="class.01">Warrior</label>
+      <label index="class.02">Paladin</label>
+      <label index="class.03">Hunter</label>
+      <label index="class.04">Rogue</label>
+      <label index="class.05">Priest</label>
+      <label index="class.06">Death Knight</label>
+      <label index="class.07">Shaman</label>
+      <label index="class.08">Mage</label>
+      <label index="class.09">Warlock</label>
+      <label index="class.10"></label>
+      <label index="class.11">Druid</label>
+      <label index="race.01">Mensch</label>
+      <label index="race.02">xxx</label>
+      <label index="race.03">Zwerg</label>
+      <label index="race.04">Nachtelf</label>
+      <label index="race.05">xxx</label>
+      <label index="race.06">xxx</label>
+      <label index="race.07">Gnom</label>
+      <label index="race.08">xxx</label>
+      <label index="race.09">xxx</label>
+      <label index="race.10">xxx</label>
+      <label index="race.11">Draenei</label>
 		</languageKey>
 		<languageKey index="de" type="array">
-			<label index="title">World of Warcraft&trade;</label>
+			<label index="title"><![CDATA[World of Warcraft&trade;]]></label>
 		</languageKey>
 	</data>
 </T3locallang>

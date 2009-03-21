@@ -60,6 +60,8 @@ class tx_wowguild_mod2 {
 	 */
 	function main($content,$conf)	{
     $this->conf = $conf;
+    if(empty($this->conf['realm']))return 'Please specify a realm!';
+    if(empty($this->conf['name']))return 'Please specify a name!';
     $guild = new tx_wowguild_guild($this->conf['realm'],$this->conf['name']);
     $content .= "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n";
     foreach( $guild->members->character as $num => $char ){
