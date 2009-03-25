@@ -29,9 +29,13 @@
 
 unset($MCONF);
 include ('conf.php');
+include ('../inc/const.inc');
 include ($BACK_PATH.'init.php');
 include ($BACK_PATH.'template.php');
+$LANG->includeLLFile('EXT:wow_guild/locallang.xml');
 $LANG->includeLLFile('EXT:wow_guild/mod1/locallang.xml');
+
+require_once(t3lib_extMgm::extPath('wow_guild').'inc/class.tx_wowguild_guild.php');
 
 /**
  * Class to producing navigation frame of the tx_directmail extension
@@ -70,11 +74,7 @@ class tx_directmail_navframe{
     $this->doc = t3lib_div::makeInstance('template');
     $this->doc->backPath = $BACK_PATH;
 
-
     $this->currentSubScript = t3lib_div::_GP('currentSubScript');
-
-      // Setting highlight mode:
-    $this->doHighlight = !$BE_USER->getTSConfigVal('options.pageTree.disableTitleHighlight');
 
     $this->doc->JScode='';
 
@@ -82,9 +82,8 @@ class tx_directmail_navframe{
     $this->doc->JScode=$this->doc->wrapScriptTags(
       ($this->currentSubScript?'top.currentSubScript=unescape("'.rawurlencode($this->currentSubScript).'");':'').'
 
-      function jumpTo(params,linkObj,highLightID)  { //
+      function jumpTo(params,linkObj,highLightID){//
         var theUrl = top.TS.PATH_typo3+top.currentSubScript+"?"+params;
-
         if (top.condensedMode)  {
           top.content.document.location=theUrl;
         } else {
@@ -95,33 +94,12 @@ class tx_directmail_navframe{
         return false;
       }
 
+      // Call this function, refresh_nav(), from another script in the backend if you want to refresh the navigation frame (eg. after having changed a page title or moved pages etc.)
+      // See t3lib_BEfunc::getSetUpdateSignal()
+      function refresh_nav(){window.setTimeout("_refresh_nav();",0);}
 
-        // Call this function, refresh_nav(), from another script in the backend if you want to refresh the navigation frame (eg. after having changed a page title or moved pages etc.)
-        // See t3lib_BEfunc::getSetUpdateSignal()
-      function refresh_nav() { //
-        window.setTimeout("_refresh_nav();",0);
-      }
+      function _refresh_nav(){document.location="'.htmlspecialchars(t3lib_div::getIndpEnv('SCRIPT_NAME').'?unique='.time()).'";}
 
-
-      function _refresh_nav()  { //
-        document.location="'.htmlspecialchars(t3lib_div::getIndpEnv('SCRIPT_NAME').'?unique='.time()).'";
-      }
-
-        // Highlighting rows in the page tree:
-      function hilight_row(frameSetModule,highLightID) { //
-          // Remove old:
-        theObj = document.getElementById(top.fsMod.navFrameHighlightedID[frameSetModule]);
-        if (theObj)  {
-          theObj.style.backgroundColor="";
-        }
-
-          // Set new:
-        top.fsMod.navFrameHighlightedID[frameSetModule] = highLightID;
-        theObj = document.getElementById(highLightID);
-        if (theObj)  {
-          theObj.style.backgroundColor="'.t3lib_div::modifyHTMLColorAll($this->doc->bgColor,-5).'";
-        }
-      }
     ');
   }
 
@@ -133,37 +111,40 @@ class tx_directmail_navframe{
   function main()  {
     global $LANG,$BACK_PATH, $TYPO3_DB;
 
+    $this->conf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['wow_guild']);
+    if(empty($this->conf['realm']))return 'Please specify a realm!';
+    if(empty($this->conf['name']))return 'Please specify a name!';
+    $guild = new tx_wowguild_guild($this->conf['realm'],$this->conf['name']);
+    
     $this->content = '';
     $this->content.= $this->doc->startPage('Navigation');
 
     $out = '';
-    for( $i = 1 ; $i < 12 ; $i++ ) if( $label = $LANG->getLL(sprintf('class.%02d',$i)) ) $out .= $this->row($label,$i);
-    $out = '<table cellspacing="0" cellpadding="0" border="0" width="100%">'.$out.'</table>';
+    $out .= "<li>".$this->button('Players',array('view'=>'players'))."</li>\n";
+    $out = "<ul style=\"list-style:none;padding:0;margin: 0 0 0 10px;\">".$out."</ul>";
+    $this->content.= $this->doc->section($guild->name.' ('.$guild->realm.')',$out);
+    $this->content.= $this->doc->spacer(10);/**/
+    
+    $out = '';
+    for( $i = 1 ; $i < 12 ; $i++ )
+      if($i!=10)
+        $out .= '<td style="padding: 0 0 0 3px;">'.$this->button('<img src="'.sprintf(ARMORY_CLASS_ICONS,$i).'" width="18" height="18"/>',array('class'=>$i)).'</td>';
+    $out = '<table cellspacing="0" cellpadding="0" border="0" style="margin: 0 0 0 10px;">'.$out.'</table>';
     $this->content.= $this->doc->section($LANG->getLL('sortby.class'), $out, 1, 1, 0 , TRUE);
     $this->content.= $this->doc->spacer(10);/**/
     
     $out = '';
-    for( $i = 1 ; $i < 12 ; $i++ ) if( $label = $LANG->getLL(sprintf('race.%02d',$i)) ) $out .= $this->row($label,$i);
-    $out = '<table cellspacing="0" cellpadding="0" border="0" width="100%">'.$out.'</table>';
+    $races = explode('|',FACTION_RACES);
+    $races = explode(',',$races[$guild->faction]);
+    foreach( $races as $j => $i )$out .= '<td style="padding: 0 0 0 3px;">'.$this->button('<img src="'.sprintf(ARMORY_RACE_ICONS,$i,0).'" width="18" height="18"/>',array('race'=>$i)).'</td>';
+    $out = '<table cellspacing="0" cellpadding="0" border="0" style="margin: 0 0 0 10px;">'.$out.'</table>';
     $this->content.= $this->doc->section($LANG->getLL('sortby.race'), $out, 1, 1, 0 , TRUE);
     $this->content.= $this->doc->spacer(10);/**/
     
-    /* refresh
-    $this->content.='<p class="c-refresh"><a href="'.htmlspecialchars(t3lib_div::linkThisScript(array('unique' => uniqid('directmail_navframe')))).'">';
-    $this->content.='<img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'], 'gfx/refresh_n.gif','width="14" height="14"').' title="'.$LANG->sL('LLL:EXT:lang/locallang_core.xml:labels.refresh',1).'" alt="" />';
-    $this->content.='REFRESH</a></p><br />';/**/
-
-    // Adding highlight - JavaScript
-    if($this->doHighlight)$this->content.=$this->doc->wrapScriptTags('hilight_row("",top.fsMod.navFrameHighlightedID["web"]);');
-    
   }
 
-  private function row($label,$uid){
-    $out .= "<tr onmouseover=\"this.style.backgroundColor='".t3lib_div::modifyHTMLColorAll($this->doc->bgColor,-5)."'\" onmouseout=\"this.style.backgroundColor=''\">";
-    $out .= "<td id=\"dmail_".$uid."\"><a href=\"#\" onclick=\"top.fsMod.recentIds['txwowguildM1']=".$uid.";jumpTo('id=".$uid."',this,'dmail_".$uid."');\">&nbsp;&nbsp;";
-    $out .= htmlspecialchars($label);
-    $out .= '</a></td></tr>';
-    return $out;
+  private function button($label,$params){
+    return "<a href=\"#\" onclick=\"jumpTo('".http_build_query($params)."',this);\">".$label."</a>";
   }
   
   /**

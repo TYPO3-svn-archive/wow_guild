@@ -46,10 +46,31 @@ class tx_wowguild_guild{
     /* ACCESS */
     public function __get($key){
       switch($key){
-        case 'members': return $this->xml->guildInfo->guild->members;
+        case 'members': return $this->getAll();
+        case 'faction': return intval($this->xml->guildKey['factionId']);
+        case 'name': return strval($this->xml->guildKey['name']);
+        case 'realm': return strval($this->xml->guildKey['realm']);
       }
       return null;
     }
+ 
+    public function getAll(){
+      foreach( $this->xml->guildInfo->guild->members->character as $num => $char )$tmp[] = $char;
+      return $tmp;
+    }
+ 
+    public function getByClass($classID){
+      foreach( $this->xml->guildInfo->guild->members->character as $num => $char )if($char['classId']==$classID)$tmp[] = $char;
+      return $tmp;
+    }
+    
+    public function getByRace($raceID){
+      foreach( $this->xml->guildInfo->guild->members->character as $num => $char )if($char['raceId']==$raceID)$tmp[] = $char;
+      return $tmp;
+    }
+
+    public function isAlliance(){return ( $this->faction == 0 );}
+    public function isHorde(){return ( $this->faction == 1 );}
     
 }
 

@@ -1,6 +1,8 @@
 
-table {background-color:#000;padding:3px;border:2px inset #aaa;}
-table tr td {padding:0 5px;}
+#ext-wow-guild-mod2-index-php {background-color:#000;margin:0;padding:0;}
+
+table {padding:0;margin:0;}
+table tr td {padding:0 5px;vertical-align: middle;color:#fff;border-bottom:1px dotted #999999;}
 table tr td a {color:inherit;}
 table tr td a:hover {color:inherit;text-decoration:underline;}
 table tr.class01 td {color:#C79C6E;} /*Warrior*/

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+  <meta type="array">
+    <type>module</type>
+    <description>Global language labels</description>
+  </meta>
+  <data type="array">
+    <languageKey index="default" type="array">
+      <label index="class.01">Warrior</label>
+      <label index="class.02">Paladin</label>
+      <label index="class.03">Hunter</label>
+      <label index="class.04">Rogue</label>
+      <label index="class.05">Priest</label>
+      <label index="class.06">Death Knight</label>
+      <label index="class.07">Shaman</label>
+      <label index="class.08">Mage</label>
+      <label index="class.09">Warlock</label>
+      <label index="class.10"></label>
+      <label index="class.11">Druid</label>
+      <label index="race.01">Human</label>
+      <label index="race.02">Orc</label>
+      <label index="race.03">Dwarf</label>
+      <label index="race.04">Nightelf</label>
+      <label index="race.05">Undead</label>
+      <label index="race.06">Taure</label>
+      <label index="race.07">Gnom</label>
+      <label index="race.08">Troll</label>
+      <label index="race.09"></label>
+      <label index="race.10">Bloodelf</label>
+      <label index="race.11">Draenei</label>
+    </languageKey>
+  </data>
+</T3locallang>

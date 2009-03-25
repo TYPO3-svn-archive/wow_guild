@@ -22,21 +22,8 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+require_once(t3lib_extMgm::extPath('wow_guild').'inc/const.inc');
 require_once(t3lib_extMgm::extPath('wow_guild').'inc/class.tx_wowguild_guild.php');
-
-DEFINE(CLASSID_WA,1);
-DEFINE(CLASSID_PA,2);
-DEFINE(CLASSID_HU,3);
-DEFINE(CLASSID_RO,4);
-DEFINE(CLASSID_PR,5);
-DEFINE(CLASSID_DK,6);
-DEFINE(CLASSID_SH,7);
-DEFINE(CLASSID_MA,8);
-DEFINE(CLASSID_WL,9);
-DEFINE(CLASSID_DR,11);
-
-DEFINE(CLASS_NAMES,'Warrior|Paladin|Hunter|Rogue|Priest|Death Knight|Shaman|Mage|Warlock|-|Druid');
-DEFINE(CLASS_COLOR,'#C79C6E|#F58CBA|#ABD473|#FFF569|#FFFFFF|#C41F3B|#2459FF|#69CCF0|#9482C9||#FF7D0A');
 
 /**
  * Module 'wow_guild' Section 'Members' for the 'wow_guild' extension.
@@ -50,6 +37,7 @@ class tx_wowguild_mod2 {
 	var $scriptRelPath = 'mod2/class.tx_wowguild_mod2.php';	// Path to this script relative to the extension dir.
 	var $extKey        = 'wow_guild';	// The extension key.
   var $conf          = null;
+  var $modVars       = null;// url parameters
 	
 	/**
 	 * The main method of the PlugIn
@@ -60,23 +48,50 @@ class tx_wowguild_mod2 {
 	 */
 	function main($content,$conf)	{
     $this->conf = $conf;
+    $this->modVars = array_merge($_GET,$_POST);// get parameters
+    //$content .= t3lib_div::view_array($this->modVars).'<br />';
     if(empty($this->conf['realm']))return 'Please specify a realm!';
     if(empty($this->conf['name']))return 'Please specify a name!';
     $guild = new tx_wowguild_guild($this->conf['realm'],$this->conf['name']);
     $content .= "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n";
-    foreach( $guild->members->character as $num => $char ){
-      $content .= sprintf(
-        "<tr class=\"class%02d\"><td><a href=\"http://armory.wow-europe.com/character-sheet.xml?%s\" target=\"armory.wow-europe.com\">%s</a></td><td>[%02d]%s</td><td>[%02d]%s</td><td>%s</td></tr>\n",
-        $char['classId'],
-        $char['url'],
-        $char['name'],
-        $char['raceId'],
-        $char['race'],
-        $char['classId'],
-        $char['class'],
-        $char['level']
-      );
+    
+    if($this->modVars['race'])
+      $characters = $guild->getByRace($this->modVars['race']);
+    elseif($this->modVars['class'])
+      $characters = $guild->getByClass($this->modVars['class']);
+    else
+      $characters = $guild->members;
+    
+    $tmp = array();
+    foreach( $characters as $num => $char ){// sort by level
+      if( $char['level'] > 79 ) $tmp['80'][] = $char;
+      elseif( $char['level'] > 69 ) $tmp['70 - 79'][] = $char;
+      elseif( $char['level'] > 59 ) $tmp['60 - 69'][] = $char;
+      else $tmp['unter 60'][] = $char;
     }
+    
+    foreach( $tmp as $key => $characters ){
+      $content .= "<tr><td colspan=\"6\">".$key."</td></tr>\n";
+      foreach( $characters as $num => $char ){
+        $content .= sprintf(
+          "<tr class=\"class%02d\">".
+          "<td><a href=\"http://armory.wow-europe.com/character-sheet.xml?%s\" target=\"armory.wow-europe.com\">%s</a></td>".
+          "<td>%s</td><td>%s</td>".
+          "<td>%s</td><td>%s</td>".
+          "<td>%s</td>".
+          "</tr>\n",
+          $char['classId'],
+          $char['url'],
+          $char['name'],
+          '<img src="'.sprintf(ARMORY_RACE_ICONS,$char['raceId'],$char['genderId']).'"/>',
+          $char['race'],
+          '<img src="'.sprintf(ARMORY_CLASS_ICONS,$char['classId']).'"/>',
+          $char['class'],
+          $char['level']
+        );
+      }
+    }  
+    $content .= "<tr><td colspan=\"6\" style=\"text-align:right;\">Anzahl: ".count($characters)."</td></tr>\n";
     $content .= "</table>\n";
     return $content;
 	}
