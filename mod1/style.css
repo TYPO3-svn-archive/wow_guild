@@ -1,0 +1,6 @@
+
+table#dungeons {}
+table#dungeons select {width:230px;}
+table#dungeons select.dungeons {margin-top:3px;}
+table#dungeons select.bosses {margin-top:2px;}
+table#dungeons input {width:226px;}

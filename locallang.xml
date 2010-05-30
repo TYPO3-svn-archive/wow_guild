@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <T3locallang>
-  <meta type="array">
-    <type>module</type>
-    <description>Global language labels</description>
-  </meta>
-  <data type="array">
-    <languageKey index="default" type="array">
+	<meta type="array">
+		<type>database</type>
+		<description>Language labels for database tables/fields belonging to extension 'wow_guild'</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tx_wowguild_guilds">Guild</label>
+			<label index="tx_wowguild_guilds.name">Name</label>
       <label index="class.01">Warrior</label>
       <label index="class.02">Paladin</label>
       <label index="class.03">Hunter</label>
@@ -28,6 +30,32 @@
       <label index="race.09"></label>
       <label index="race.10">Bloodelf</label>
       <label index="race.11">Draenei</label>
-    </languageKey>
-  </data>
+		</languageKey>
+		<languageKey index="de" type="array">
+			<label index="tx_wowguild_guilds">Gilde</label>
+			<label index="tx_wowguild_guilds.name">Name</label>
+      <label index="class.01">Krieger</label>
+      <label index="class.02">Paladin</label>
+      <label index="class.03">Jäger</label>
+      <label index="class.04">Schurke</label>
+      <label index="class.05">Priester</label>
+      <label index="class.06">Todesritter</label>
+      <label index="class.07">Shamane</label>
+      <label index="class.08">Magier</label>
+      <label index="class.09">Hexenmeister</label>
+      <label index="class.10"></label>
+      <label index="class.11">Druide</label>
+      <label index="race.01">Human</label>
+      <label index="race.02">Mensch</label>
+      <label index="race.03">Zwerg</label>
+      <label index="race.04">Nachtelf</label>
+      <label index="race.05">Untoter</label>
+      <label index="race.06">Taure</label>
+      <label index="race.07">Gnom</label>
+      <label index="race.08">Troll</label>
+      <label index="race.09"></label>
+      <label index="race.10">Blutelf</label>
+      <label index="race.11">Draenei</label>
+		</languageKey>
+	</data>
 </T3locallang>

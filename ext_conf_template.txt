@@ -1,8 +1,0 @@
-# cat=basic/string; type=string; label=Realm:Enter your realm name.
-realm = 
-
-# cat=basic/string; type=string; label=Name:Enter your guild name.
-name = 
-
-# cat=basic/int; type=int; label=Storage:Enter pid where players and characters are stored.
-pid = 

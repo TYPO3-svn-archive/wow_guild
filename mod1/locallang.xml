@@ -2,16 +2,26 @@
 <T3locallang>
 	<meta type="array">
 		<type>module</type>
-		<description>Language labels for module &quot;txwowguildM1&quot;</description>
+		<description>Language labels</description>
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-      <label index="title"><![CDATA[World of Warcraft&trade;]]></label>
-      <label index="sortby.class">characters by class:</label>
-			<label index="sortby.race">characters by race:</label>
+			<label index="mlang_tabs_tab">Guild</label>
+			<label index="mlang_labels_tabdescr">Manage Guild data</label>
+			<label index="mlang_labels_tablabel">Manage Guild data</label>
+			<label index="title">Manage Guild data</label>
+			<label index="page.1.title">Page 1</label>
+			<label index="page.2.title">Page 2</label>
+			<label index="page.3.title">Page 3</label>
 		</languageKey>
 		<languageKey index="de" type="array">
-			<label index="title"><![CDATA[World of Warcraft&trade;]]></label>
+			<label index="mlang_tabs_tab">Guild</label>
+			<label index="mlang_labels_tabdescr">Verwaltung der Guild</label>
+			<label index="mlang_labels_tablabel">Verwaltung der Guild</label>
+			<label index="title">Verwaltung der Guild</label>
+			<label index="page.1.title">Seite 1</label>
+			<label index="page.2.title">Seite 2</label>
+			<label index="page.3.title">Seite 3</label>
 		</languageKey>
 	</data>
 </T3locallang>
